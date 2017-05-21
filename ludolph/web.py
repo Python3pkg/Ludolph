@@ -105,7 +105,7 @@ class WebServer(ServerAdapter):
 
     def display_webhooks(self):
         """Return list of available webhooks suitable for logging"""
-        return ['%s [%s]: %s' % (name, hook.module, hook.path) for name, hook in self.webhooks.items()]
+        return ['%s [%s]: %s' % (name, hook.module, hook.path) for name, hook in list(self.webhooks.items())]
 
 
 def _webview(fun):

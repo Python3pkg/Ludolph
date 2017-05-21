@@ -18,7 +18,7 @@ try:
     from configparser import RawConfigParser
 except ImportError:
     # noinspection PyCompatibility,PyUnresolvedReferences
-    from ConfigParser import RawConfigParser
+    from configparser import RawConfigParser
 
 try:
     # noinspection PyCompatibility

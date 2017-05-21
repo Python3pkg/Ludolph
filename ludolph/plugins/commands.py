@@ -118,7 +118,7 @@ class Commands(LudolphPlugin):
         """Initialize commands from config file"""
         logger.debug('Initializing dynamic commands')
 
-        for name, value in self.config.items():
+        for name, value in list(self.config.items()):
             try:
                 fun_name = name.strip().replace('-', '_')
 
@@ -164,7 +164,7 @@ class Commands(LudolphPlugin):
                 cmd = shlex.split(msg['body'])
             else:
                 cmd = shlex.split(cmd)
-                cmd.extend(map(str, args))
+                cmd.extend(list(map(str, args)))
         except Exception:
             raise CommandError('Could not parse command parameters')
 

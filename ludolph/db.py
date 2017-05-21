@@ -9,9 +9,9 @@ import logging
 from shelve import Shelf
 
 try:
-    import anydbm as dbm
+    import dbm as dbm
 except ImportError:
-    import dbm
+    import dbm.ndbm
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class LudolphDB(Shelf):
     def __init__(self, filename, flag='c', protocol=None, writeback=False):
         self.filename = filename
         logger.info('Opening persistent DB file %s', filename)
-        Shelf.__init__(self, dbm.open(filename, flag, mode=0o600), protocol, writeback)
+        Shelf.__init__(self, dbm.ndbm.open(filename, flag, mode=0o600), protocol, writeback)
 
     def __setitem__(self, key, value):
         logger.debug('Assigning item %r to persistent DB key "%s"', value, key)

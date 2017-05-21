@@ -113,10 +113,10 @@ class CronJob(object):
         cmd = [self._fun.name.replace('_', '-')]
 
         if self.args:
-            cmd.extend(map(str, self.args))
+            cmd.extend(list(map(str, self.args)))
 
         if self.kwargs:
-            cmd.extend(['%s=%s' % kv for kv in self.kwargs.items()])
+            cmd.extend(['%s=%s' % kv for kv in list(self.kwargs.items())])
 
         return ' '.join(cmd)
 
@@ -212,7 +212,7 @@ class CronTab(OrderedDict):
         """Store only onetime cron jobs into persistent DB"""
         try:
             if self.db is not None:
-                self.db['crontab'] = self.__class__((name, job) for name, job in self.items() if job.onetime)
+                self.db['crontab'] = self.__class__((name, job) for name, job in list(self.items()) if job.onetime)
         except Exception as ex:
             logger.exception(ex)
             logger.critical('Could not sync crontab with persistent DB file')
@@ -282,7 +282,7 @@ class CronTab(OrderedDict):
 
     def display_cron_jobs(self):
         """Return list of available non-onetime cron jobs suitable for logging"""
-        return (job.display() for job in self.values() if not job.onetime)
+        return (job.display() for job in list(self.values()) if not job.onetime)
 
 
 CRONJOBS = CronTab()

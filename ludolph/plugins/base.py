@@ -75,7 +75,7 @@ class Base(LudolphPlugin):
 
             out = ['List of available **%s** commands:' % xmpp.nick]
 
-            for mod_name, plugin in xmpp.plugins.items():  # The plugins dict knows the plugin order
+            for mod_name, plugin in list(xmpp.plugins.items()):  # The plugins dict knows the plugin order
                 try:
                     commands = cmd_map[mod_name]
                 except KeyError:
@@ -406,7 +406,7 @@ class Base(LudolphPlugin):
 
             out = ['**%s** [%s] __%s__' % (name, job.schedule,
                                            ' '.join(job.command.split(' ')[2:]).replace(self._reminder + ' ', ''))
-                   for name, job in crontab.items() if display_job(job)]
+                   for name, job in list(crontab.items()) if display_job(job)]
         else:
             if self.xmpp.is_jid_admin(user):
                 display_job = lambda cronjob: cronjob.onetime
@@ -414,7 +414,7 @@ class Base(LudolphPlugin):
                 display_job = lambda cronjob: cronjob.onetime and user == cronjob.owner
 
             out = ['**%s** [%s] (%s) __%s__' % (name, job.schedule, job.owner, job.command)
-                   for name, job in crontab.items() if display_job(job)]
+                   for name, job in list(crontab.items()) if display_job(job)]
 
         count = len(out)
         out.append('\n**%d** %s scheduled' % (count, pluralize(count, 'job is', 'jobs are')))

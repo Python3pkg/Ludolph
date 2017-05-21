@@ -241,12 +241,12 @@ class LudolphBot(LudolphDBMixin):
 
     def _db_set_items_all(self):
         """Save all internal+plugin data to persistent DB for every initialized plugin"""
-        for modname, plugin in self.plugins.items():  # ludolph.bot is part of plugins
+        for modname, plugin in list(self.plugins.items()):  # ludolph.bot is part of plugins
             self._db_set_item(modname, plugin)
 
     def _db_load_items_all(self):
         """Load all internal+plugin data from persistent DB for every initialized plugin"""
-        for modname, plugin in self.plugins.items():  # ludolph.bot is part of plugins
+        for modname, plugin in list(self.plugins.items()):  # ludolph.bot is part of plugins
             self._db_load_item(modname, plugin)
 
     @staticmethod
@@ -491,14 +491,14 @@ class LudolphBot(LudolphDBMixin):
         """
         Run __post_init__() method for each initialized plugin.
         """
-        for modname, plugin in self.plugins.items():  # ludolph.bot is part of plugins
+        for modname, plugin in list(self.plugins.items()):  # ludolph.bot is part of plugins
             self._post_init_plugin(modname, plugin)
 
     def _destroy_plugins(self):
         """
         Run __destroy__() method for each initialized plugin.
         """
-        for modname, plugin in reversed(self.plugins.items()):  # ludolph.bot is part of plugins
+        for modname, plugin in reversed(list(self.plugins.items())):  # ludolph.bot is part of plugins
             self._destroy_plugin(modname, plugin)
 
     def _run_event_handlers(self, event_name, *args):
@@ -756,7 +756,7 @@ class LudolphBot(LudolphDBMixin):
         Remove roster items with none subscription.
         """
         roster = self.client_roster
-        logger.info('Current roster: %s', ', '.join(roster.keys()))
+        logger.info('Current roster: %s', ', '.join(list(roster.keys())))
 
         # Remove users with none subscription from roster
         # Also remove users that are not in users setting (if set)
@@ -1001,7 +1001,7 @@ class LudolphBot(LudolphDBMixin):
         """
         msg = copy.copy(msg)
 
-        for key, val in kwargs.items():
+        for key, val in list(kwargs.items()):
             msg[key] = val
 
         return msg

@@ -124,7 +124,7 @@ class IncomingLudolphMessage(Message):
                 continue
 
         # The all other ElementBase items
-        for k, v in data.items():
+        for k, v in list(data.items()):
             obj[k] = v
 
         return obj

@@ -151,7 +151,7 @@ class Commands(dict):
 
     def display(self):
         """Return list of available commands suitable for logging output"""
-        return ['%s [%s]' % (name, cmd.module) for name, cmd in self.items()]
+        return ['%s [%s]' % (name, cmd.module) for name, cmd in list(self.items())]
 
     def get_command(self, cmdstr):
         """Find text in available commands and return command tuple"""
